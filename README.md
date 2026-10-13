@@ -1,36 +1,67 @@
 # Git Cure
 
-**Terminal-native Git diagnostics and recovery powered by Gemma 4.**
+**Terminal-Native Git Diagnostics and Recovery Powered by Gemma 4**
 
-Git Cure helps developers identify Git repository issues, understand their root causes, and follow a structured recovery plan.
+Git Cure is a developer tool designed to diagnose Git repository issues and provide structured, safety-focused recovery recommendations. It combines repository telemetry, AI-assisted diagnosis, recovery planning, and a real-time dashboard to help developers recover from common Git problems.
 
-## Problem
+## Problem Statement
 
-Developers frequently encounter Git issues such as detached HEAD states, merge conflicts, unfinished rebases, and accidental commits to the wrong branch. Recovering from these situations can be confusing and may risk losing uncommitted work.
+Git errors can be difficult to understand and resolve, especially during hackathons and collaborative development. Issues such as detached HEAD states, merge conflicts, unfinished rebases, and accidental commits to the wrong branch can interrupt development and risk losing uncommitted work.
 
-## Solution
+Developers often rely on online searches and unfamiliar commands to resolve these issues, which can lead to further repository problems.
 
-Git Cure acts as a Git Doctor that:
+Git Cure aims to simplify this process by providing clear diagnoses and guided recovery steps directly within the development workflow.
 
-- **Detects:** Inspects repository status and Git history to identify problems.
-- **Diagnoses:** Uses Gemma 4 through OmniRoute to explain root causes.
-- **Plans:** Generates step-by-step recovery recommendations.
-- **Protects:** Uses safety snapshots and approval steps before recovery actions.
-- **Visualizes:** Provides a dashboard for repository diagnostics and recovery progress.
+## Proposed Solution
 
-## Tech Stack
+Git Cure acts as a terminal-native Git diagnostic and recovery assistant.
 
-- **Frontend:** React, Vite, TypeScript, Tailwind CSS
-- **Backend:** Node.js, TypeScript
-- **AI:** Gemma 4 via OmniRoute
-- **Communication:** Socket.IO
-- **Package Management:** npm workspaces
+Its key capabilities include:
+
+- **Repository Diagnostics:** Inspects Git repository state and identifies potential issues.
+- **AI-Assisted Analysis:** Uses Gemma 4 through OmniRoute to explain detected problems and their possible root causes.
+- **Recovery Planning:** Generates structured, step-by-step recovery recommendations.
+- **Risk Classification:** Classifies recovery actions according to their potential risk.
+- **Safety Snapshots:** Supports creating recovery snapshots before operations that modify repository state.
+- **Approval Workflow:** Allows users to review and approve recovery steps where required.
+- **Real-Time Dashboard:** Presents repository status, diagnosis results, recovery progress, execution logs, and verification results.
+
+The dashboard serves as a presentation layer. Git operations are handled by the CLI engine rather than executed directly by the frontend.
+
+## System Architecture
+
+The system is organized into the following components:
+
+1. **CLI Engine:** Responsible for repository inspection, Git state detection, and coordinating recovery operations.
+2. **Gemma Module:** Analyzes detected issues and produces structured diagnostic results.
+3. **Recovery Planner:** Organizes recommended actions into ordered steps and classifies their risks.
+4. **Guarded Executor:** Coordinates approved recovery operations, safety snapshots, and verification.
+5. **Dashboard:** Displays diagnostics and recovery progress through a React-based interface.
+
+The components communicate through shared TypeScript data contracts and the application's service interfaces.
+
+## Technology Stack
+
+| Component | Technologies |
+|---|---|
+| Frontend | React, Vite, TypeScript |
+| Styling | Tailwind CSS |
+| Icons | Lucide |
+| Real-Time Communication | Socket.IO |
+| CLI Engine | Node.js, TypeScript |
+| AI Diagnostics | Gemma 4, OmniRoute |
+| Shared Contracts | TypeScript |
+| Package Management | npm workspaces |
 
 ## Project Structure
 
 ```text
-apps/dashboard/   # React dashboard
-packages/shared/  # Shared TypeScript types
-packages/cli/     # CLI engine
-services/gemma/   # Gemma diagnostics
-docs/             # Project documentation
+Hacktoberfest-Nexora/
+├── apps/
+│   └── dashboard/       # React dashboard
+├── packages/
+│   ├── shared/           # Shared TypeScript data contracts
+│   └── cli/              # CLI engine
+├── services/
+│   └── gemma/             # AI diagnosis module
+└── docs/                  # Architecture and API documentation
